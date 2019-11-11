@@ -1,8 +1,14 @@
 import static org.junit.Assert.assertEquals;
 
+import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
+import com.carrotsearch.junitbenchmarks.BenchmarkRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 public class ChessKnightTest {
+   @Rule
+   public TestRule benchmarkRun = new BenchmarkRule();
 
    @Test
    public void count_8x8_S2x1_E7x5() {
@@ -65,12 +71,14 @@ public class ChessKnightTest {
    }
 
    @Test(timeout = 400)
+   @BenchmarkOptions(concurrency = 1, warmupRounds = 50, benchmarkRounds = 100)
    public void count_perfomance1() {
       int expectedResult = 132;
       assertEquals(expectedResult, ChessKnight.countMoves(1000, 1000, 312, 67, 51, 50));
    }
 
    @Test(timeout = 10000)
+   @BenchmarkOptions(concurrency = 1, warmupRounds = 50, benchmarkRounds = 100)
    public void count_perfomance2() {
       int expectedResult = 251;
       assertEquals(expectedResult, ChessKnight.countMoves(1000, 1000, 1, 500, 2, 1000));
